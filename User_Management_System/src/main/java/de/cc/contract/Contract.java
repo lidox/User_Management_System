@@ -19,7 +19,14 @@ public interface Contract {
 	/**
 	 * 
 	 * @return
-	 *    get the price per extra minute 
+	 *    get the price per extra minute in cent
 	 */
 	int getPricePerExtraMinute();
+	
+	/**
+	 * 
+	 * @return
+	 *    get the amount of basic fee included in the contract in cent
+	 */
+	int getBasicFee(); 
 }
