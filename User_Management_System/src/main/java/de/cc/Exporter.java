@@ -27,7 +27,7 @@ public class Exporter {
 		try {
 			scanner = new Scanner(new File("data.csv"));
 			while (scanner.hasNextLine()) {
-				String s = scanner.next();
+				String s = scanner.nextLine();
 				Subscriber sub = new Subscriber();
 				try {
 					sub.deserialize(s);
@@ -38,13 +38,12 @@ public class Exporter {
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		}
 		return list;
 	}
 
 	public static void main(String[] args) {
-
+		
 	}
 
 }

@@ -8,6 +8,7 @@ public class Controller {
 	private Scanner sc = new Scanner(System.in);
 	private Exporter exp = new Exporter();
 	private List<Subscriber> subs;
+	private SubscriberController subCon= new SubscriberController(this);
 	
 	public Controller() {
 		subs = exp.importSubscribers();
@@ -30,7 +31,7 @@ public class Controller {
 		
 		switch (readInt()) {
 		case 1:
-			//printSubscriberManagement();
+			
 			break;
 		case 2:
 			//printSessionManagement();
@@ -46,4 +47,5 @@ public class Controller {
 			printStartMenu();
 		}
 	}
+	
 }
