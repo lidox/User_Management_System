@@ -31,7 +31,7 @@ public class Controller {
 		
 		switch (readInt()) {
 		case 1:
-			
+			subCon.printSubscriberManagementMenu();
 			break;
 		case 2:
 			//printSessionManagement();
