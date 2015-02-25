@@ -1,19 +1,17 @@
 package de.cc;
 
+import java.util.List;
 import java.util.Scanner;
-
 
 public class Controller {
 	
 	private Scanner sc = new Scanner(System.in);
+	private Exporter exp = new Exporter();
+	private List<Subscriber> subs;
 	
 	public Controller() {
-	}
-	
-	public void printStartMenu(){
-		System.out.println("(1) Subscriber Management");
-		System.out.println("(2) Session Management");
-		System.out.println("(3) Invoice");
+		subs = exp.importSubscribers();
+		printStartMenu();
 	}
 	
 	public String readString(){
@@ -22,5 +20,30 @@ public class Controller {
 	
 	public int readInt(){
 		return sc.nextInt();
+	}
+	
+	public void printStartMenu(){
+		System.out.println("(1) Subscriber Management");
+		System.out.println("(2) Session Management");
+		System.out.println("(3) Invoice");
+		System.out.println("(4) Save & Close");
+		
+		switch (readInt()) {
+		case 1:
+			//printSubscriberManagement();
+			break;
+		case 2:
+			//printSessionManagement();
+			break;
+		case 3:
+			//printInvoice();
+			break;
+		case 4:
+			//close();
+			break;
+		default:
+			System.out.println("Illegal Input");
+			printStartMenu();
+		}
 	}
 }
