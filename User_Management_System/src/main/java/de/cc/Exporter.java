@@ -30,12 +30,13 @@ public class Exporter {
 				String s = scanner.next();
 				Subscriber sub = new Subscriber();
 				try {
-				sub.deserialize(s);
-				} catch(IllegalArgumentException e) {
+					sub.deserialize(s);
+				} catch (IllegalArgumentException e) {
 					continue;
 				}
 				list.add(sub);
 			}
+			scanner.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
