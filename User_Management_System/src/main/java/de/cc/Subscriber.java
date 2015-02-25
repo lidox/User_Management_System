@@ -87,4 +87,15 @@ public class Subscriber {
 			throw new IllegalArgumentException("Data could not be correctly parsed");
 		}
 	}
+	
+	public String toString() {
+		return String.format("262 42 %s %25s %4d %4d %15s %15s",
+			getId(),
+			getName(),
+			getUsedMinutes(),
+			getUsedDataVolume(),
+			getPhone(),
+			getContract()
+		);
+	}
 }
