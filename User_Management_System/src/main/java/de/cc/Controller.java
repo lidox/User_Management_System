@@ -39,11 +39,15 @@ public class Controller {
 			//printInvoice();
 			break;
 		case 4:
-			//close();
+			close();
 			break;
 		default:
 			System.out.println("Illegal Input");
 			printStartMenu();
 		}
+	}
+	
+	public void close() {
+		exp.export(subs);
 	}
 }
