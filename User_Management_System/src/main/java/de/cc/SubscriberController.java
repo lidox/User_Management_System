@@ -1,7 +1,5 @@
 package de.cc;
 
-import java.util.Scanner;
-
 import de.cc.contract.Budget;
 import de.cc.contract.Business;
 import de.cc.contract.Contract;
@@ -18,17 +16,45 @@ public class SubscriberController {
 	public SubscriberController(Controller controller) {
 		this.controller = controller;
 	}
+	
+	public void printSubscriberManagementMenu() {
+		System.out.println("(1) Add Subscriber");
+		System.out.println("(2) Edit Subscriber");
+		System.out.println("(3) Remove Subscriber");
+		System.out.println("(4) List Subscribers");
+		System.out.println("(5) Return");
+
+		switch (controller.readInt()) {
+		case 1:
+			addSubscriber();
+			break;
+		case 2:
+			// Edit Subscriber();
+			break;
+		case 3:
+			// Remove Subscriber();
+			break;
+		case 4:
+			listSubscribers();
+			break;
+		case 5:
+			controller.printStartMenu();
+			break;
+		default:
+			System.out.println("Illegal Input");
+			this.printSubscriberManagementMenu();
+		}
+	}
 
 	public void addSubscriber() {
 		try {
 		Subscriber sub = new Subscriber();
-		Scanner scanner = new Scanner(System.in);
 		 
 		System.out.print("Subscriber Name: ");
-		sub.setName(scanner.nextLine());
+		sub.setName(controller.readString(".+"));
 		
 		System.out.print("Subscriber MSIN: ");
-		sub.setId(scanner.nextLine());
+		sub.setId(controller.readString("\\d{10}"));
 		
 		System.out.println("Subscriber Terminal Type: ");
 		sub.setPhone(inputTerminalType());
@@ -38,9 +64,8 @@ public class SubscriberController {
 		
 		controller.getSubscriber().add(sub);
 		
-		scanner.close();
 		} catch(Exception e) {
-			System.out.println("Error");
+			System.out.println("Error: " + e.getMessage());
 		}
 		
 		controller.printStartMenu();
@@ -83,33 +108,11 @@ public class SubscriberController {
 		}
 	}
 	
-	public void printSubscriberManagementMenu() {
-		System.out.println("(1) Add Subscriber");
-		System.out.println("(2) Edit Subscriber");
-		System.out.println("(3) Remove Subscriber");
-		System.out.println("(4) List Subscribers");
-		System.out.println("(5) Return");
-
-		switch (controller.readInt()) {
-		case 1:
-			addSubscriber();
-			break;
-		case 2:
-			// printSessionManagement();
-			break;
-		case 3:
-			// printInvoice();
-			break;
-		case 4:
-			// close();
-			break;
-		case 5:
-			controller.printStartMenu();
-			break;
-		default:
-			System.out.println("Illegal Input");
-			this.printSubscriberManagementMenu();
+	public void listSubscribers() {
+		for (Subscriber sub: controller.getSubscriber()) {
+			System.out.println(sub);
 		}
+		controller.printStartMenu();
 	}
 
 }

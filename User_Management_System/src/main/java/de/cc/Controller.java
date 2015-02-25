@@ -21,11 +21,19 @@ public class Controller {
 	}
 	
 	public String readString(){
-		return sc.next();
+		return sc.nextLine();
+	}
+	
+	public String readString(String pattern){
+		String in = sc.next(pattern);
+		sc.reset();
+		return in;
 	}
 	
 	public int readInt(){
-		return sc.nextInt();
+		int in = sc.nextInt();
+		sc.reset();
+		return in;
 	}
 	
 	public void printStartMenu(){
@@ -55,5 +63,6 @@ public class Controller {
 	
 	public void close() {
 		exp.export(subs);
+		sc.close();
 	}
 }

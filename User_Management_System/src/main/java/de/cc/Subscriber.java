@@ -89,13 +89,15 @@ public class Subscriber {
 	}
 	
 	public String toString() {
-		return String.format("262 42 %s %25s %4d %4d %15s %15s",
+		String phone = getPhone().getClass().getName();
+		String contract = getContract().getClass().getName();
+		return String.format("262-42-%s - %-25s Voice: %4d min, Data: %4d MB, %-20s %s",
 			getId(),
 			getName(),
 			getUsedMinutes(),
 			getUsedDataVolume(),
-			getPhone(),
-			getContract()
+			phone.substring(phone.lastIndexOf(".")+1),
+			contract.substring(contract.lastIndexOf(".")+1)
 		);
 	}
 }
