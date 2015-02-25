@@ -16,6 +16,10 @@ public class Controller {
 		printStartMenu();
 	}
 	
+	public List<Subscriber> getSubscriber() {
+		return subs;
+	}
+	
 	public String readString(){
 		return sc.next();
 	}
