@@ -3,18 +3,20 @@ package de.cc.contract;
 public class Premium implements Contract {
 
 	public int getFreeData() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 5000;
 	}
 
 	public int getFreeMinutes() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 100;
 	}
 
 	public int getPricePerExtraMinute() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 5;
+	}
+
+
+	public int getBasicFee() {
+		return 500;
 	}
 
 }
