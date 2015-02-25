@@ -29,7 +29,12 @@ public class Exporter {
 			while (scanner.hasNextLine()) {
 				String s = scanner.next();
 				Subscriber sub = new Subscriber();
+				try {
 				sub.deserialize(s);
+				} catch(IllegalArgumentException e) {
+					continue;
+				}
+				list.add(sub);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
