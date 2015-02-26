@@ -22,13 +22,11 @@ public class Premium implements Contract {
 		return basicFee;
 	}
 
-	@Override
 	public void addData(int data, int price) {
 		dataVolume += data;
 		basicFee += price;
 	}
 
-	@Override
 	public void resetContract() {
 		dataVolume = 5000;
 		basicFee = 500;

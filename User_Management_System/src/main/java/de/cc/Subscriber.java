@@ -1,13 +1,15 @@
 package de.cc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.cc.contract.Contract;
 import de.cc.phone.Phone;
 
 public class Subscriber {
 	private String name;
 	private String id;
-	private int usedMinutes;
-	private int usedDataVolume;
+	private List<Session> sessions = new ArrayList<Session>();
 	private Contract contract;
 	private Phone phone;
 	
@@ -36,22 +38,28 @@ public class Subscriber {
 		this.id = id;
 	}
 	public int getUsedMinutes() {
-		return usedMinutes;
+		int sum = 0;
+		for (Session s: sessions) {
+			if (s.getService() == ServiceType.VOICE_CALL) {
+				sum += s.getDauer();
+			}
+		}
+		return sum;
 	}
 	public int getLeftMinutes() {
-		return Math.max(contract.getFreeMinutes()-usedMinutes, 0);
-	}
-	public void setUsedMinutes(int usedMinutes) {
-		this.usedMinutes = usedMinutes;
+		return Math.max(contract.getFreeMinutes()-getUsedMinutes(), 0);
 	}
 	public int getUsedDataVolume() {
-		return usedDataVolume;
+		int sum = 0;
+		for (Session s: sessions) {
+			if (s.getService() == ServiceType.VOICE_CALL) {
+				sum += s.getDauer();
+			}
+		}
+		return sum;
 	}
 	public int getLeftDataVolume() {
-		return Math.max(contract.getFreeData()-usedDataVolume, 0);
-	}
-	public void setUsedDataVolume(int usedDataVolume) {
-		this.usedDataVolume = usedDataVolume;
+		return Math.max(contract.getFreeData()-getUsedDataVolume(), 0);
 	}
 	
 	public Contract getContract() {
@@ -68,33 +76,28 @@ public class Subscriber {
 	}
 	
 	public void useService(ServiceType service, int time) {
+		int volume = 0;
 		switch (service) {
 		case VOICE_CALL:
-			usedMinutes += time;
-			break;
+			sessions.add(new Session(service, time));
+			return;
 		case BROWSING:
-			addDataVolume(Math.min(phone.getThroughput(), 2)*time);
+			volume = Math.min(phone.getThroughput(), 2)*time;
+			sessions.add(new Session(service, time, volume));
 			break;
 		case VIDEO:
-			addDataVolume(phone.getThroughput()*time);
+			volume = phone.getThroughput()*time;
+			sessions.add(new Session(service, time, volume));
 			break;
 		}
-	}
-	
-	private void addDataVolume(int volume) {
-		if (volume > getLeftDataVolume()) {
-			usedDataVolume = contract.getFreeData();
-			throw new IllegalStateException("Datavolume is consumed, no more data can be transmitted this month!");
-		}
-		usedDataVolume += volume;
 	}
 	
 	/**
 	 * @return The subscriber transformed to a comma-separated line
 	 */
 	public String serialize() {
-		return id + "," + name + "," + usedMinutes + "," + usedDataVolume
-			+ "," + contract.getClass().getName() + "," + phone.getClass().getName();
+		return id + "," + name + "," + sessions
+				+ "," + contract.getClass().getName() + "," + phone.getClass().getName();
 	}
 	
 	/**
@@ -111,8 +114,7 @@ public class Subscriber {
 		try {
 			setId(parts[0]);
 			setName(parts[1]);
-			usedMinutes = Integer.parseInt(parts[2]);
-			usedDataVolume = Integer.parseInt(parts[3]);
+			//TODO: session
 			setContract((Contract) Class.forName(parts[4]).getConstructor().newInstance());
 			setPhone((Phone) Class.forName(parts[5]).getConstructor().newInstance());
 		} catch (Exception e) {
