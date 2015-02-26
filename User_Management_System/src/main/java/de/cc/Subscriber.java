@@ -92,6 +92,10 @@ public class Subscriber {
 		}
 	}
 	
+	public List<Session> getSessions() {
+		return sessions;
+	}
+	
 	public void resetSessions() {
 		sessions.clear();
 	}
