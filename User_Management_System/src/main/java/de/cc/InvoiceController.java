@@ -1,5 +1,7 @@
 package de.cc;
 
+import java.util.List;
+
 /**
  * This class does the invoice for each subscriber
  */
@@ -32,9 +34,11 @@ public class InvoiceController {
 	 * do invoice for each subscriber
 	 */
 	private void doInvoice() {
-		for (Subscriber subscriber: controller.getSubscribers()) {
+		List<Subscriber> listSub = controller.getSubscribers();
+		for (Subscriber subscriber: listSub) {
 			System.out.println(subscriber.toString());
-			for (Session session : subscriber.getSessions()) {
+			List<Session> listSess = subscriber.getSessions();
+			for (Session session : listSess) {
 				System.out.println(session.toString());
 			}
 			subscriber.resetSessions();
