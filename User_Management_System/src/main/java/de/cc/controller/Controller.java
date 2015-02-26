@@ -17,7 +17,6 @@ public class Controller {
 	
 	public Controller() {
 		subs = exp.importSubscribers();
-		printStartMenu();
 	}
 	
 	public List<Subscriber> getSubscribers() {
