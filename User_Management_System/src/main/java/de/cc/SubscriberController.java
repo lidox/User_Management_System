@@ -35,7 +35,7 @@ public class SubscriberController {
 			removeSubscriber();
 			break;
 		case 4:
-			listSubscribers(true);
+			listSubscribers();
 			break;
 		case 5:
 			controller.printStartMenu();
@@ -108,22 +108,57 @@ public class SubscriberController {
 	}
 
 	public void removeSubscriber() {
-		listSubscribers(false);
-		try {
-			controller.getSubscribers().remove(controller.searchSubscriber());
-		} catch (IllegalStateException e) {
-			System.out.println(e.getMessage());
+
+		listSubscribers();
+
+		Subscriber sub = new Subscriber();
+
+		int index = controller.searchSubscriber(); 
+
+		if (index != -1) {
+			controller.getSubscribers().remove(index);
 		}
+
 		controller.printStartMenu();
+
+	}
+	
+	public void editSubscriber() {
+		
+		
+		
+		System.out.println("(1) Change Name");
+		System.out.println("(2) Change Terminal");
+		System.out.println("(3) Change Subscription");
+		System.out.println("(4) Return");
+
+		switch (controller.readInt()) {
+		case 1:
+			addSubscriber();
+			break;
+		case 2:
+			// editSubscriber();
+			break;
+		case 3:
+			removeSubscriber();
+			break;
+		case 4:
+			listSubscribers();
+			break;
+		case 5:
+			controller.printStartMenu();
+			break;
+		default:
+			System.out.println("Illegal Input");
+			this.printSubscriberManagementMenu();
+		}
 	}
 
-	public void listSubscribers(boolean returnToStartMenu) {
+	public void listSubscribers() {
 		for (Subscriber sub: controller.getSubscribers()) {
 			System.out.println(sub);
 		}
-		if (returnToStartMenu) {
-			controller.printStartMenu();
-		}
+		controller.printStartMenu();
 	}
 
 }
