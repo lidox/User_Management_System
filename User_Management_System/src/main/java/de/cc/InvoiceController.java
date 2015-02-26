@@ -38,6 +38,7 @@ public class InvoiceController {
 				System.out.println(session.toString());
 			}
 			subscriber.resetSessions();
+			controller.printStartMenu();
 		}
 		
 	}
