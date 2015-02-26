@@ -17,5 +17,10 @@ public class Business implements Contract {
 	public int getBasicFee() {
 		return 3000;
 	}
+	
+	@Override
+	public String toString() {
+		return "Business";
+	}
 
 }

@@ -18,5 +18,10 @@ public class Premium implements Contract {
 	public int getBasicFee() {
 		return 5000;
 	}
+	
+	@Override
+	public String toString() {
+		return "Premium";
+	}
 
 }

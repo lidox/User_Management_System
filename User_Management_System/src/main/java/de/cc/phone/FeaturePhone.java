@@ -10,4 +10,8 @@ public class FeaturePhone extends AbstractPhone {
 		return new RAN[]{new HSPA()};
 	}
 	
+	@Override
+	public String toString() {
+		return "FeaturePhone";
+	}
 }

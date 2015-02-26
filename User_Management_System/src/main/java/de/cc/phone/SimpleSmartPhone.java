@@ -9,5 +9,10 @@ public class SimpleSmartPhone extends AbstractPhone {
 	protected RAN[] getRANs() {
 		return new RAN[]{new HSPA()};
 	}
+	
+	@Override
+	public String toString() {
+		return "SimpleSmartPhone";
+	}
 
 }

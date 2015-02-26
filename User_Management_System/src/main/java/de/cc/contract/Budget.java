@@ -17,6 +17,11 @@ public class Budget implements Contract {
 	public int getBasicFee() {
 		return 1000;
 	}
+	
+	@Override
+	public String toString() {
+		return "Budget";
+	}
 
 	
 }

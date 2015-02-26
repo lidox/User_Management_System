@@ -16,5 +16,10 @@ public class HSPA extends AbstractRAN {
 	protected int getMaxThroughput() {
 		return 10;
 	}
+	
+	@Override
+	public String toString() {
+		return "HSPA";
+	}
 
 }

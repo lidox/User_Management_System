@@ -10,5 +10,10 @@ public class SuperSmartPhone extends AbstractPhone {
 	protected RAN[] getRANs() {
 		return new RAN[]{new LTE(), new HSPA()};
 	}
+	
+	@Override
+	public String toString() {
+		return "SuperSmartPhone";
+	}
 
 }

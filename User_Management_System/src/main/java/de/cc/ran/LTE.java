@@ -16,5 +16,10 @@ public class LTE extends AbstractRAN {
 	protected int getMaxThroughput() {
 		return 100;
 	}
+	
+	@Override
+	public String toString() {
+		return "LTE";
+	}
 
 }
