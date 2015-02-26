@@ -12,6 +12,8 @@ public class Subscriber {
 	private List<Session> sessions = new ArrayList<Session>();
 	private Contract contract;
 	private Phone phone;
+	private int additionalVolume;
+	private int additionalCosts;
 	
 	public String getName() {
 		return name;
@@ -59,7 +61,7 @@ public class Subscriber {
 		return sum;
 	}
 	public int getLeftDataVolume() {
-		return Math.max(contract.getFreeData()-getUsedDataVolume(), 0);
+		return Math.max(contract.getFreeData()+additionalVolume-getUsedDataVolume(), 0);
 	}
 	
 	public Contract getContract() {
@@ -75,21 +77,26 @@ public class Subscriber {
 		this.phone = phone;
 	}
 	
-	public void useService(ServiceType service, int time) {
-		int volume = 0;
+	public int useService(ServiceType service, int time) {
+		int rate = 0;
 		switch (service) {
 		case VOICE_CALL:
 			sessions.add(new Session(service, time));
-			return;
+			return 0;
 		case BROWSING:
-			volume = Math.min(phone.getThroughput(), 2)*time;
-			sessions.add(new Session(service, time, volume));
+			rate = Math.min(phone.getThroughput(), 2);
 			break;
 		case VIDEO:
-			volume = phone.getThroughput()*time;
-			sessions.add(new Session(service, time, volume));
+			rate = phone.getThroughput();
 			break;
 		}
+		int volume = rate*time;
+		int leftVolume = getLeftDataVolume();
+		if (volume > leftVolume) {
+			return (volume-leftVolume)/rate;
+		}
+		sessions.add(new Session(service, time, volume));
+		return 0;
 	}
 	
 	public List<Session> getSessions() {
@@ -100,11 +107,18 @@ public class Subscriber {
 		sessions.clear();
 	}
 	
+	public int invoice() {
+		int extraMins = Math.max(getUsedMinutes() - contract.getFreeMinutes(), 0);
+		return contract.getBasicFee()
+			+ contract.getPricePerExtraMinute()*extraMins
+			+ additionalCosts;
+	}
+	
 	/**
 	 * @return The subscriber transformed to a comma-separated line
 	 */
 	public String serialize() {
-		return id + "," + name + "," + sessions
+		return id + "," + name + "," + sessions + "," + additionalCosts + "," + additionalVolume
 				+ "," + contract.getClass().getName() + "," + phone.getClass().getName();
 	}
 	
@@ -122,9 +136,11 @@ public class Subscriber {
 		try {
 			setId(parts[0]);
 			setName(parts[1]);
-			//TODO: session
-			setContract((Contract) Class.forName(parts[4]).getConstructor().newInstance());
-			setPhone((Phone) Class.forName(parts[5]).getConstructor().newInstance());
+			//TODO: session parts[2]
+			additionalCosts = Integer.parseInt(parts[3]);
+			additionalVolume = Integer.parseInt(parts[4]);
+			setContract((Contract) Class.forName(parts[5]).getConstructor().newInstance());
+			setPhone((Phone) Class.forName(parts[6]).getConstructor().newInstance());
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Data could not be correctly parsed");
 		}
@@ -148,6 +164,7 @@ public class Subscriber {
 	 * In this case it's 1000 MB for 10 Euro.
 	 */
 	public void addData(){
-		contract.addData(1000,100);
+		additionalCosts += 1000;
+		additionalVolume += 1000;
 	}
 }
