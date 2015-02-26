@@ -48,13 +48,14 @@ public class SessionController {
 			System.out.println(sub.getName()+ serviceType + time);
 			sub.useService(serviceType, time);
 		
-			System.out.println(String.format("262-42-%s - %-25s Used MB: %4d min, Left MB: %4d MB, %-20s %s",
+			System.out.println(String.format("262-42-%s - %-8s Minutes: %4s, ServiceType: %4s, Used MB: %4s, Left MB: %4s MB, signal quality: %4s",
 					sub.getId(),
 					sub.getName(),
-					serviceType.toString(),
 					time,
+					serviceType.toString(),
+					sub.getSessions().get(sub.getSessions().size()-1).getDataVolume(),
 					sub.getLeftDataVolume(),
-					sub.getUsedMinutes()));
+					sub.getSessions().get(sub.getSessions().size()-1)));
 			
 		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
