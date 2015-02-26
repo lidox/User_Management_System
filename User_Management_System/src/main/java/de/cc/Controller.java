@@ -23,13 +23,14 @@ public class Controller {
 	/**
 	 * Waits for input of name or MSIN, loops until match is found or search is quitted
 	 * 
-	 * @return Index of found subscriber or -1 if search is quitted
+	 * @return Index of found subscriber
+	 * @throws IllegalStateException if search is quitted
 	 */
 	public int searchSubscriber() {
 		System.out.println("Insert MSIN or name to search for (insert 'q' to quit search)");
 		String search = readString(".+");
 		if ("q".equals(search)) {
-			return -1;
+			throw new IllegalStateException("Search for subscriber was quitted by user");
 		}
 		int i = 0;
 		for (Subscriber sub: subs) {
