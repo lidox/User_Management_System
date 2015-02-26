@@ -73,7 +73,7 @@ public class SessionController {
 	 * 	  if subscriber not exists return null otherwise return subscriber 
 	 */
 	public Subscriber getSubscribor(String IMSI){
-		for(Subscriber item:controller.getSubscriber()){
+		for(Subscriber item:controller.getSubscribers()){
 			if(item.getId().equals(IMSI.substring(5))){
 				return item;
 			}
