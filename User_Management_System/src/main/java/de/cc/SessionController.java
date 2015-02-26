@@ -43,9 +43,10 @@ public class SessionController {
 			System.out.print("Select time (in minutes): ");
 			int time = getTime(controller.readString(".+"));
 			
+			//hat er genug datenvolumen?
+			
 			System.out.println(sub.getName()+ serviceType + time);
-			// berechnung auf den benutzer anwenden
-			//sub.useService(serviceType, time);
+			sub.useService(serviceType, time);
 		
 			System.out.println(String.format("262-42-%s - %-25s Used MB: %4d min, Left MB: %4d MB, %-20s %s",
 					sub.getId(),
