@@ -49,22 +49,21 @@ public class SubscriberController {
 	public void addSubscriber() {
 		try {
 			Subscriber sub = new Subscriber();
-
+			 
 			System.out.print("Subscriber Name: ");
 			sub.setName(controller.readString(".+"));
-
+			
 			System.out.print("Subscriber MSIN: ");
 			sub.setId(controller.readString("\\d{10}"));
-
+			
 			System.out.println("Subscriber Terminal Type: ");
 			sub.setPhone(inputTerminalType());
-
+			
 			System.out.println("Subscriber Subscription Type: ");
 			sub.setContract(inputSubscriptionType());
-
-			controller.getSubscriber().add(sub);
-
-		} catch (Exception e) {
+			
+			controller.getSubscribers().add(sub);
+		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
 
@@ -114,10 +113,10 @@ public class SubscriberController {
 
 		Subscriber sub = new Subscriber();
 
-		int index = controller.searchsubscriber();
+		int index = controller.searchSubscriber();
 
 		if (index != -1) {
-			controller.getSubscriber().remove(index);
+			controller.getSubscribers().remove(index);
 		}
 
 		controller.printStartMenu();
@@ -125,7 +124,7 @@ public class SubscriberController {
 	}
 
 	public void listSubscribers() {
-		for (Subscriber sub : controller.getSubscriber()) {
+		for (Subscriber sub: controller.getSubscribers()) {
 			System.out.println(sub);
 		}
 		controller.printStartMenu();
