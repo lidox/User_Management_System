@@ -21,13 +21,11 @@ public class Budget implements Contract {
 		return basicFee;
 	}
 
-	@Override
 	public void addData(int data, int price) {
 		dataVolume += data;
 		basicFee += price;
 	}
 
-	@Override
 	public void resetContract() {
 		dataVolume = 500;
 		basicFee = 100;
