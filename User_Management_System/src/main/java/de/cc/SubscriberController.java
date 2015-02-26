@@ -32,7 +32,7 @@ public class SubscriberController {
 			// editSubscriber();
 			break;
 		case 3:
-			// Remove Subscriber();
+			removeSubscriber();
 			break;
 		case 4:
 			listSubscribers();
