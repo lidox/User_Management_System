@@ -16,7 +16,7 @@ public class SubscriberController {
 	public SubscriberController(Controller controller) {
 		this.controller = controller;
 	}
-	
+
 	public void printSubscriberManagementMenu() {
 		System.out.println("(1) Add Subscriber");
 		System.out.println("(2) Edit Subscriber");
@@ -29,10 +29,10 @@ public class SubscriberController {
 			addSubscriber();
 			break;
 		case 2:
-			// Edit Subscriber();
+			// editSubscriber();
 			break;
 		case 3:
-			// Remove Subscriber();
+			removeSubscriber();
 			break;
 		case 4:
 			listSubscribers();
@@ -66,9 +66,9 @@ public class SubscriberController {
 		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		
+
 		controller.printStartMenu();
-		
+
 	}
 
 	public Phone inputTerminalType() {
@@ -88,7 +88,7 @@ public class SubscriberController {
 			return this.inputTerminalType();
 		}
 	}
-	
+
 	public Contract inputSubscriptionType() {
 		System.out.println("(1) Budget");
 		System.out.println("(2) Business");
@@ -106,7 +106,23 @@ public class SubscriberController {
 			return this.inputSubscriptionType();
 		}
 	}
-	
+
+	public void removeSubscriber() {
+
+		listSubscribers();
+
+		Subscriber sub = new Subscriber();
+
+		int index = controller.searchSubscriber();
+
+		if (index != -1) {
+			controller.getSubscribers().remove(index);
+		}
+
+		controller.printStartMenu();
+
+	}
+
 	public void listSubscribers() {
 		for (Subscriber sub: controller.getSubscribers()) {
 			System.out.println(sub);
