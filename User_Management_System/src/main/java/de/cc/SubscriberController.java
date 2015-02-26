@@ -62,7 +62,7 @@ public class SubscriberController {
 			System.out.println("Subscriber Subscription Type: ");
 			sub.setContract(inputSubscriptionType());
 			
-			controller.getSubscriber().add(sub);
+			controller.getSubscribers().add(sub);
 		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -108,7 +108,7 @@ public class SubscriberController {
 	}
 	
 	public void listSubscribers() {
-		for (Subscriber sub: controller.getSubscriber()) {
+		for (Subscriber sub: controller.getSubscribers()) {
 			System.out.println(sub);
 		}
 		controller.printStartMenu();
