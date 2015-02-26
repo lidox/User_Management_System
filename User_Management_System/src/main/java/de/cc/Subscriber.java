@@ -38,11 +38,17 @@ public class Subscriber {
 	public int getUsedMinutes() {
 		return usedMinutes;
 	}
+	public int getLeftMinutes() {
+		return Math.max(contract.getFreeMinutes()-usedMinutes, 0);
+	}
 	public void addUsedMinutes(int usedMinutes) {
 		this.usedMinutes += usedMinutes;
 	}
 	public int getUsedDataVolume() {
 		return usedDataVolume;
+	}
+	public int getLeftDataVolume() {
+		return Math.max(contract.getFreeData()-usedDataVolume, 0);
 	}
 	public void addUsedDataVolume(int usedDataVolume) {
 		this.usedDataVolume += usedDataVolume;
