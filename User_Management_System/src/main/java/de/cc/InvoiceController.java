@@ -36,7 +36,7 @@ public class InvoiceController {
 	private void doInvoice() {
 		List<Subscriber> listSub = controller.getSubscribers();
 		for (Subscriber subscriber: listSub) {
-			System.out.println(subscriber.toString());
+			System.out.println(subscriber.toString() + " Cost: " + subscriber.invoice());
 			List<Session> listSess = subscriber.getSessions();
 			for (Session session : listSess) {
 				System.out.println(session.toString());
