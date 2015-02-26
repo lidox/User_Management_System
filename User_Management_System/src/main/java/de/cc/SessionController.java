@@ -44,17 +44,32 @@ public class SessionController {
 			int time = getTime(controller.readString(".+"));
 			
 			//hat er genug datenvolumen?
+			int left = sub.useService(serviceType, time);
+			while(left>0){
+				System.out.println("Do you want extra 1 GB for 10 Euro?");
+				if(wantMore(controller.readString(".+"))){
+					sub.addData();
+				}
+				else{
+					sub.useService(serviceType, (time-left));
+					break;
+				}
+				left = sub.useService(serviceType, time);
+			}
 			
-			System.out.println(sub.getName()+ serviceType + time);
-			sub.useService(serviceType, time);
+
+			
+			//System.out.println(sub.getName()+ serviceType + time);
+			//sub.useService(serviceType, time);
 		
-			System.out.println(String.format("262-42-%s - %-25s Used MB: %4d min, Left MB: %4d MB, %-20s %s",
-					sub.getId(),
-					sub.getName(),
-					serviceType.toString(),
-					time,
-					sub.getLeftDataVolume(),
-					sub.getUsedMinutes()));
+			System.out.println(String.format("262-42-%s - %-8s Minutes: %4s, ServiceType: %4s, Used MB: %4s, Left MB: %4s MB, signal quality: %4s",
+                    sub.getId(),
+                    sub.getName(),
+                    time,
+                    serviceType.toString(),
+                    sub.getSessions().get(sub.getSessions().size()-1).getDataVolume(),
+                    sub.getLeftDataVolume(),
+                    sub.getSessions().get(sub.getSessions().size()-1)));
 			
 		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -64,6 +79,23 @@ public class SessionController {
 		
 	}
 	
+	private boolean wantMore(String readString) {
+		String type = readString.toLowerCase();
+		
+		if(type.equals("no") || type.equals("n"))
+			return false;
+		
+		if(type.equals("yes") || type.equals("y"))
+			return true;
+		
+		
+		//if(type.equals("quit") || type.equals("q"))
+		//	throw new IllegalArgumentException("");
+		
+		System.out.println("Incorrect answer. Yes or no are accepted. Type again");
+		return wantMore(readString);
+	}
+
 	/**
 	 * check if input is a valid service type
 	 * @param userInput
