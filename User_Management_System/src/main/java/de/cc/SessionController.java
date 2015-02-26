@@ -1,6 +1,7 @@
 package de.cc;
 
 
+
 /**
  * this class handles all about Session Management
  */
@@ -14,18 +15,17 @@ public class SessionController {
 	
 	public void printSessionManagementMenu(){
 		System.out.println(".:: SESSION MANAGEMENT ::.");
-		System.out.println("session,id,time,service");
 		System.out.println("(1) Select User");
 
 		
-		switch (controller.readString()) {
-		case "":
-			//printSubscriberManagement();
-			break;
-		default:
-			System.out.println("Illegal Input");
-			this.printSessionManagementMenu();;
-		}
+//		switch (controller.readString()) {
+//		case "":
+//			//printSubscriberManagement();
+//			break;
+//		default:
+//			System.out.println("Illegal Input");
+//			this.printSessionManagementMenu();;
+//		}
 	}
 	
 	public String getFreeMinutesAndData(Subscriber sub){
@@ -50,5 +50,18 @@ public class SessionController {
 		}
 		return null;
 	}
+
+	/**
+	 * Simulates a subscribers session
+	 * @param sessionType
+	 * @param subscriberId
+	 * @param time
+	 * @param service
+	 */
+	public void simulate(String sessionType,String subscriberId,String time, String service){
+
+	}
+	
+	
 	
 }
