@@ -170,7 +170,7 @@ public class Subscriber {
 	}
 	
 	public String toString() {
-		return String.format("262-42-%s - %-25s Voice: %4d min, Data: %4d MB, %-20s %s",
+		return String.format("262-42-%s - %-25s Voice: %4d min, Data: %4d MB, %s, %s",
 			getId(),
 			getName(),
 			getUsedMinutes(),

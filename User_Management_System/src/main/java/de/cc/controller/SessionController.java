@@ -33,7 +33,7 @@ public class SessionController {
 
 	public void simulateSession() {
 		try {
-			System.out.print("Select subscriber: ");
+			System.out.println("Select subscriber: ");
 			int indexOfSubscriber = controller.searchSubscriber();
 			Subscriber sub = controller.getSubscribers().get(indexOfSubscriber);
 			
