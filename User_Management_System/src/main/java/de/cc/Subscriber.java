@@ -41,8 +41,8 @@ public class Subscriber {
 	public int getLeftMinutes() {
 		return Math.max(contract.getFreeMinutes()-usedMinutes, 0);
 	}
-	public void addUsedMinutes(int usedMinutes) {
-		this.usedMinutes += usedMinutes;
+	public void setUsedMinutes(int usedMinutes) {
+		this.usedMinutes = usedMinutes;
 	}
 	public int getUsedDataVolume() {
 		return usedDataVolume;
@@ -50,8 +50,8 @@ public class Subscriber {
 	public int getLeftDataVolume() {
 		return Math.max(contract.getFreeData()-usedDataVolume, 0);
 	}
-	public void addUsedDataVolume(int usedDataVolume) {
-		this.usedDataVolume += usedDataVolume;
+	public void setUsedDataVolume(int usedDataVolume) {
+		this.usedDataVolume = usedDataVolume;
 	}
 	
 	public Contract getContract() {
@@ -66,6 +66,32 @@ public class Subscriber {
 	public void setPhone(Phone phone) {
 		this.phone = phone;
 	}
+	
+	public void useService(ServiceType service, int time) {
+		switch (service) {
+		case VOICE_CALL:
+			usedMinutes += time;
+			break;
+		case BROWSING:
+			addDataVolume(Math.min(phone.getThroughput(), 2)*time);
+			break;
+		case VIDEO:
+			addDataVolume(phone.getThroughput()*time);
+			break;
+		}
+	}
+	
+	private void addDataVolume(int volume) {
+		if (volume > getLeftDataVolume()) {
+			usedDataVolume = contract.getFreeData();
+			throw new IllegalStateException("Datavolume is consumed, no more data can be transmitted this month!");
+		}
+		usedDataVolume += volume;
+	}
+	
+	/**
+	 * @return The subscriber transformed to a comma-separated line
+	 */
 	public String serialize() {
 		return id + "," + name + "," + usedMinutes + "," + usedDataVolume
 			+ "," + contract.getClass().getName() + "," + phone.getClass().getName();
