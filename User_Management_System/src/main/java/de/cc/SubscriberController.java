@@ -16,7 +16,7 @@ public class SubscriberController {
 	public SubscriberController(Controller controller) {
 		this.controller = controller;
 	}
-	
+
 	public void printSubscriberManagementMenu() {
 		System.out.println("(1) Add Subscriber");
 		System.out.println("(2) Edit Subscriber");
@@ -29,7 +29,7 @@ public class SubscriberController {
 			addSubscriber();
 			break;
 		case 2:
-			// Edit Subscriber();
+			// editSubscriber();
 			break;
 		case 3:
 			// Remove Subscriber();
@@ -48,28 +48,28 @@ public class SubscriberController {
 
 	public void addSubscriber() {
 		try {
-		Subscriber sub = new Subscriber();
-		 
-		System.out.print("Subscriber Name: ");
-		sub.setName(controller.readString(".+"));
-		
-		System.out.print("Subscriber MSIN: ");
-		sub.setId(controller.readString("\\d{10}"));
-		
-		System.out.println("Subscriber Terminal Type: ");
-		sub.setPhone(inputTerminalType());
-		
-		System.out.println("Subscriber Subscription Type: ");
-		sub.setContract(inputSubscriptionType());
-		
-		controller.getSubscriber().add(sub);
-		
-		} catch(Exception e) {
+			Subscriber sub = new Subscriber();
+
+			System.out.print("Subscriber Name: ");
+			sub.setName(controller.readString(".+"));
+
+			System.out.print("Subscriber MSIN: ");
+			sub.setId(controller.readString("\\d{10}"));
+
+			System.out.println("Subscriber Terminal Type: ");
+			sub.setPhone(inputTerminalType());
+
+			System.out.println("Subscriber Subscription Type: ");
+			sub.setContract(inputSubscriptionType());
+
+			controller.getSubscriber().add(sub);
+
+		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		
+
 		controller.printStartMenu();
-		
+
 	}
 
 	public Phone inputTerminalType() {
@@ -89,7 +89,7 @@ public class SubscriberController {
 			return this.inputTerminalType();
 		}
 	}
-	
+
 	public Contract inputSubscriptionType() {
 		System.out.println("(1) Budget");
 		System.out.println("(2) Business");
@@ -107,9 +107,25 @@ public class SubscriberController {
 			return this.inputSubscriptionType();
 		}
 	}
-	
+
+	public void removeSubscriber() {
+
+		listSubscribers();
+
+		Subscriber sub = new Subscriber();
+
+		int index = controller.searchsubscriber();
+
+		if (index != -1) {
+			controller.getSubscriber().remove(index);
+		}
+
+		controller.printStartMenu();
+
+	}
+
 	public void listSubscribers() {
-		for (Subscriber sub: controller.getSubscriber()) {
+		for (Subscriber sub : controller.getSubscriber()) {
 			System.out.println(sub);
 		}
 		controller.printStartMenu();
