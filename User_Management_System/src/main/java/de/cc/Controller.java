@@ -10,6 +10,7 @@ public class Controller {
 	private List<Subscriber> subs;
 	private SubscriberController subCon= new SubscriberController(this);
 	private SessionController sessionCon= new SessionController(this);
+	private InvoiceController invoiceCon= new InvoiceController(this);
 	
 	public Controller() {
 		subs = exp.importSubscribers();
@@ -83,7 +84,7 @@ public class Controller {
 			sessionCon.printSessionManagementMenu();
 			break;
 		case 3:
-			//printInvoice();
+			invoiceCon.printInvoiceMenu();
 			break;
 		case 4:
 			close();
