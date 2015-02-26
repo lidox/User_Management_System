@@ -133,7 +133,7 @@ public class Subscriber {
 		}
 		return id + "," + name + "," + additionalCosts + "," + additionalVolume
 			+ "," + contract.getClass().getName() + "," + phone.getClass().getName()
-			+ "," + serialSession.substring(1);
+			+ "," + (serialSession.isEmpty() ? "" : serialSession.substring(1));
 	}
 	
 	/**
@@ -142,7 +142,7 @@ public class Subscriber {
 	 * @param data String-representation of the subscriber, as produced by serialize()
 	 */
 	public static Subscriber deserialize(String data) {
-		String[] parts = data.split(",");
+		String[] parts = data.split(",",-1);
 		if (parts.length != 7) {
 			throw new IllegalArgumentException("Wrong data format");
 		}
