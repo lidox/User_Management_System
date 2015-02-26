@@ -107,7 +107,7 @@ public class Subscriber {
 		sessions.clear();
 	}
 	
-	public int invoice() {
+	public int getCurrentFee() {
 		int extraMins = Math.max(getUsedMinutes() - contract.getFreeMinutes(), 0);
 		return contract.getBasicFee()
 			+ contract.getPricePerExtraMinute()*extraMins
