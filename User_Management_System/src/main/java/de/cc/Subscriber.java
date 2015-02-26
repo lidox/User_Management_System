@@ -168,15 +168,13 @@ public class Subscriber {
 	}
 	
 	public String toString() {
-		String phone = getPhone().getClass().getName();
-		String contract = getContract().getClass().getName();
 		return String.format("262-42-%s - %-25s Voice: %4d min, Data: %4d MB, %-20s %s",
 			getId(),
 			getName(),
 			getUsedMinutes(),
 			getUsedDataVolume(),
-			phone.substring(phone.lastIndexOf(".")+1),
-			contract.substring(contract.lastIndexOf(".")+1)
+			phone,
+			contract
 		);
 	}
 }
