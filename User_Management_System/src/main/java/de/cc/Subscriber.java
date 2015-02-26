@@ -92,6 +92,10 @@ public class Subscriber {
 		}
 	}
 	
+	public void resetSessions() {
+		sessions.clear();
+	}
+	
 	/**
 	 * @return The subscriber transformed to a comma-separated line
 	 */
