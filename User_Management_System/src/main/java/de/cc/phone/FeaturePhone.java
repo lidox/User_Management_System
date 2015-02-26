@@ -1,10 +1,13 @@
 package de.cc.phone;
 
+import de.cc.ran.HSPA;
+import de.cc.ran.RAN;
+
 public class FeaturePhone extends AbstractPhone {
 
 	@Override
-	protected int[] getTroughputs() {
-		return new int[]{10};
+	protected RAN[] getRANs() {
+		return new RAN[]{new HSPA()};
 	}
 	
 }

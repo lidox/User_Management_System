@@ -1,17 +1,13 @@
 package de.cc.phone;
+import de.cc.ran.RAN;
 
 public abstract class AbstractPhone implements Phone {
-	private static final int[] signalQualities = {0, 10, 25, 50};
 	
-	protected abstract int[] getTroughputs();
-	
-	private double getSignalQuality() {
-		return signalQualities[(int) (Math.random()*4)]/100.;
-	}
+	protected abstract RAN[] getRANs();
 
 	public int getThroughput() {
-		for (int thoughput: getTroughputs()) {
-			int mbits = (int) (getSignalQuality() * thoughput);
+		for (RAN ran: getRANs()) {
+			int mbits = ran.getThroughput();
 			if (mbits > 0) {
 				return mbits;
 			}
