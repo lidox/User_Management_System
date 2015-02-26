@@ -33,7 +33,12 @@ public class InvoiceController {
 	 */
 	private void doInvoice() {
 		for (Subscriber subscriber: controller.getSubscribers()) {
-			System.out.println(subscriber.getName() +"  says: MUHAHAHAHAH!");
+			System.out.println(subscriber.toString());
+			for (Session session : subscriber.getSessions()) {
+				System.out.println(session.toString());
+			}
+			subscriber.resetSessions();
 		}
+		
 	}
 }
