@@ -78,21 +78,27 @@ public class Controller {
 		System.out.println("(3) Invoice");
 		System.out.println("(4) Save & Close");
 		
-		switch (readInt()) {
-		case 1:
-			subCon.printSubscriberManagementMenu();
-			break;
-		case 2:
-			sessionCon.printSessionManagementMenu();
-			break;
-		case 3:
-			invoiceCon.printInvoiceMenu();
-			break;
-		case 4:
-			close();
-			break;
-		default:
-			System.out.println("Illegal Input");
+		int i = readInt();
+		try {
+			switch (i) {
+			case 1:
+				subCon.printSubscriberManagementMenu();
+				break;
+			case 2:
+				sessionCon.printSessionManagementMenu();
+				break;
+			case 3:
+				invoiceCon.printInvoiceMenu();
+				break;
+			case 4:
+				close();
+				break;
+			default:
+				System.out.println("Illegal Input");
+				printStartMenu();
+			}
+		} catch (Exception e) {
+			System.out.println("An internal error occured. Back to main menu...");
 			printStartMenu();
 		}
 	}

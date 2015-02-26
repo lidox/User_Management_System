@@ -55,7 +55,7 @@ public class SubscriberController {
 			System.out.print("Subscriber Name: ");
 			sub.setName(controller.readString(".+"));
 
-			System.out.print("Subscriber MSIN: ");
+			System.out.println("Subscriber MSIN: ");
 			sub.setId(inputMSIN());
 
 			System.out.println("Subscriber Terminal Type: ");
@@ -74,7 +74,12 @@ public class SubscriberController {
 	}
 	
 	public String inputMSIN() {
+		System.out.print("Enter MSIN: ");
 		String msin = controller.readString("\\d{10}");
+		if (msin == null) {
+			System.out.println("Illegal Input. Only a single ten-digit-number is allowed. Try again.");
+			return inputMSIN();
+		}
 		for (Subscriber sub: controller.getSubscribers()) {
 			if (sub.getId().equals(msin)) {
 				System.out.println("MSIN is already in use. Enter another one.");
