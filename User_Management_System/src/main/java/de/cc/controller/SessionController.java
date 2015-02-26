@@ -50,7 +50,7 @@ public class SessionController {
 			int left = sub.useService(serviceType, time);
 			while(left>0){
 				System.out.println("Do you want extra 1 GB for 10 Euro?");
-				if(wantMore(controller.readString(".+"))){
+				if(wantMore()){
 					sub.addData();
 				}
 				else{
@@ -82,7 +82,8 @@ public class SessionController {
 		
 	}
 	
-	private boolean wantMore(String readString) {
+	private boolean wantMore() {
+		String readString = controller.readString(".+");
 		String type = readString.toLowerCase();
 		
 		if(type.equals("no") || type.equals("n"))
@@ -96,7 +97,7 @@ public class SessionController {
 		//	throw new IllegalArgumentException("");
 		
 		System.out.println("Incorrect answer. Yes or no are accepted. Type again");
-		return wantMore(readString);
+		return wantMore();
 	}
 
 	/**
