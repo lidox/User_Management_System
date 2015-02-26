@@ -54,7 +54,7 @@ public class Controller {
 	}
 	
 	public String readString(){
-		return sc.nextLine();
+		return sc.nextLine().trim();
 	}
 	
 	public String readString(String pattern){
