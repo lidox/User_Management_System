@@ -94,8 +94,12 @@ public class Controller {
 		}
 	}
 	
-	public void close() {
+	public void save() {
 		exp.export(subs);
+	}
+	
+	public void close() {
+		save();
 		sc.close();
 	}
 }

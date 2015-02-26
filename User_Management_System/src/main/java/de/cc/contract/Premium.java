@@ -2,8 +2,11 @@ package de.cc.contract;
 
 public class Premium implements Contract {
 
+	int dataVolume = 5000;
+	int basicFee = 500;
+	
 	public int getFreeData() {
-		return 5000;
+		return dataVolume;
 	}
 
 	public int getFreeMinutes() {
@@ -16,7 +19,19 @@ public class Premium implements Contract {
 
 
 	public int getBasicFee() {
-		return 500;
+		return basicFee;
+	}
+
+	@Override
+	public void addData(int data, int price) {
+		dataVolume += data;
+		basicFee += price;
+	}
+
+	@Override
+	public void resetContract() {
+		dataVolume = 5000;
+		basicFee = 500;
 	}
 
 }
