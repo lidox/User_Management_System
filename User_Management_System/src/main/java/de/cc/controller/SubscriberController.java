@@ -1,5 +1,6 @@
-package de.cc;
+package de.cc.controller;
 
+import de.cc.Subscriber;
 import de.cc.contract.Budget;
 import de.cc.contract.Business;
 import de.cc.contract.Contract;

@@ -1,7 +1,10 @@
-package de.cc;
+package de.cc.controller;
 
 import java.util.List;
 import java.util.Scanner;
+
+import de.cc.Exporter;
+import de.cc.Subscriber;
 
 public class Controller {
 	

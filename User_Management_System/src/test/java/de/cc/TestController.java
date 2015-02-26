@@ -3,6 +3,8 @@ package de.cc;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.cc.controller.Controller;
+
 public class TestController {
 	
 	private static Controller con;

@@ -6,7 +6,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.cc.ServiceType;
-import de.cc.SessionController;
 
 public class TestSessionController {
 

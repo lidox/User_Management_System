@@ -1,6 +1,9 @@
-package de.cc;
+package de.cc.controller;
 
 import java.util.List;
+
+import de.cc.Session;
+import de.cc.Subscriber;
 
 /**
  * This class does the invoice for each subscriber

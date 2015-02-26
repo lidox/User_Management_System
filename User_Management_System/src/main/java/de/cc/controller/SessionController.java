@@ -1,4 +1,7 @@
-package de.cc;
+package de.cc.controller;
+
+import de.cc.ServiceType;
+import de.cc.Subscriber;
 
 /**
  * this class handles all about Session Management 
