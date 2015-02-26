@@ -48,22 +48,21 @@ public class SubscriberController {
 
 	public void addSubscriber() {
 		try {
-		Subscriber sub = new Subscriber();
-		 
-		System.out.print("Subscriber Name: ");
-		sub.setName(controller.readString(".+"));
-		
-		System.out.print("Subscriber MSIN: ");
-		sub.setId(controller.readString("\\d{10}"));
-		
-		System.out.println("Subscriber Terminal Type: ");
-		sub.setPhone(inputTerminalType());
-		
-		System.out.println("Subscriber Subscription Type: ");
-		sub.setContract(inputSubscriptionType());
-		
-		controller.getSubscriber().add(sub);
-		
+			Subscriber sub = new Subscriber();
+			 
+			System.out.print("Subscriber Name: ");
+			sub.setName(controller.readString(".+"));
+			
+			System.out.print("Subscriber MSIN: ");
+			sub.setId(controller.readString("\\d{10}"));
+			
+			System.out.println("Subscriber Terminal Type: ");
+			sub.setPhone(inputTerminalType());
+			
+			System.out.println("Subscriber Subscription Type: ");
+			sub.setContract(inputSubscriptionType());
+			
+			controller.getSubscriber().add(sub);
 		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
