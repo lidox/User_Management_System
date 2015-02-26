@@ -64,6 +64,8 @@ public class Session {
 	}
 	
 	public String toString() {
-		return "";
+		return String.format("Service: %s, Duration: %d min, Signal-Quality: %d%%, Datavolume: %d MB",
+			service, time, signalQuality, dataVolume
+		);
 	}
 }
