@@ -5,7 +5,7 @@ public interface Contract {
 	/**
 	 * 
 	 * @return
-	 * 	   get amount for minutes included in the contract
+	 * 	   get amount of data included in the contract
 	 */
 	int getFreeData();
 	

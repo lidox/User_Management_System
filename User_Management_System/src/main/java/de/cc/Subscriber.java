@@ -142,4 +142,12 @@ public class Subscriber {
 			contract.substring(contract.lastIndexOf(".")+1)
 		);
 	}
+	
+	/**
+	 * add more data volume to the subscribers contract.
+	 * In this case it's 1000 MB for 10 Euro.
+	 */
+	public void addData(){
+		contract.addData(1000,100);
+	}
 }
