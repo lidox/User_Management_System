@@ -29,7 +29,7 @@ public class SubscriberController {
 			addSubscriber();
 			break;
 		case 2:
-			// editSubscriber();
+			editSubscriber();
 			break;
 		case 3:
 			removeSubscriber();
@@ -50,21 +50,21 @@ public class SubscriberController {
 	public void addSubscriber() {
 		try {
 			Subscriber sub = new Subscriber();
-			 
+
 			System.out.print("Subscriber Name: ");
 			sub.setName(controller.readString(".+"));
-			
+
 			System.out.print("Subscriber MSIN: ");
 			sub.setId(controller.readString("\\d{10}"));
-			
+
 			System.out.println("Subscriber Terminal Type: ");
 			sub.setPhone(inputTerminalType());
-			
+
 			System.out.println("Subscriber Subscription Type: ");
 			sub.setContract(inputSubscriptionType());
-			
+
 			controller.getSubscribers().add(sub);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
 
@@ -113,6 +113,54 @@ public class SubscriberController {
 			controller.getSubscribers().remove(controller.searchSubscriber());
 		} catch (IllegalStateException e) {
 			System.out.println(e.getMessage());
+		}
+
+		controller.printStartMenu();
+
+	}
+
+	public void editSubscriber() {
+
+		try {
+			int index = controller.searchSubscriber();
+
+			Subscriber sub = controller.getSubscribers().get(index);
+
+			System.out.println("(1) Change Name");
+			System.out.println("(2) Change Terminal");
+			System.out.println("(3) Change Subscription");
+			System.out.println("(4) Return");
+
+			switch (controller.readInt()) {
+			case 1:
+				System.out.print("Subscriber Name (" + sub.getName() + "): ");
+				sub.setName(controller.readString(".+"));
+				editSubscriber();
+			case 2:
+				System.out.println("(" + sub.getPhone() + ")");
+				System.out.println("Subscriber Terminal Type: ");
+				sub.setPhone(inputTerminalType());
+				editSubscriber();
+			case 3:
+				System.out.println("(" + sub.getContract() + ")");
+				System.out.println("Subscriber Subscription Type: ");
+				sub.setContract(inputSubscriptionType());
+				editSubscriber();
+			case 4:
+				printSubscriberManagementMenu();
+			default:
+				System.out.println("Illegal Input");
+				printSubscriberManagementMenu();
+			}
+
+		} catch (Exception e) {
+			this.printSubscriberManagementMenu();
+		}
+	}
+
+	public void listSubscribers() {
+		for (Subscriber sub : controller.getSubscribers()) {
+			System.out.println(sub);
 		}
 		controller.printStartMenu();
 	}
