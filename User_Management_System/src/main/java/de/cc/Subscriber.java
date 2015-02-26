@@ -5,6 +5,7 @@ import java.util.List;
 
 import de.cc.contract.Contract;
 import de.cc.phone.Phone;
+import de.cc.ran.RAN;
 
 public class Subscriber {
 	private String name;
@@ -78,16 +79,17 @@ public class Subscriber {
 	}
 	
 	public int useService(ServiceType service, int time) {
+		RAN ran = phone.getRAN();
 		int rate = 0;
 		switch (service) {
 		case VOICE_CALL:
 			sessions.add(new Session(service, time));
 			return 0;
 		case BROWSING:
-			rate = Math.min(phone.getThroughput(), 2);
+			rate = Math.min(ran.getThroughput(), 2);
 			break;
 		case VIDEO:
-			rate = phone.getThroughput();
+			rate = ran.getThroughput();
 			break;
 		}
 		int volume = rate*time*60;
@@ -95,7 +97,7 @@ public class Subscriber {
 		if (volume > leftVolume) {
 			return (volume-leftVolume)/(rate*60);
 		}
-		sessions.add(new Session(service, time, volume));
+		sessions.add(new Session(service, time, volume, ran));
 		return 0;
 	}
 	

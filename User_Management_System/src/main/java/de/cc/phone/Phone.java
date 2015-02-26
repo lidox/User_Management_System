@@ -1,10 +1,12 @@
 package de.cc.phone;
 
+import de.cc.ran.RAN;
+
 public interface Phone {
 
 	/**
-	 * @return throughput
+	 * @return RAN
 	 */
-	int getThroughput();
+	RAN getRAN();
 	
 }

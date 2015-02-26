@@ -5,14 +5,15 @@ public abstract class AbstractPhone implements Phone {
 	
 	protected abstract RAN[] getRANs();
 
-	public int getThroughput() {
-		for (RAN ran: getRANs()) {
-			int mbits = ran.getThroughput();
-			if (mbits > 0) {
-				return mbits;
+	public RAN getRAN() {
+		RAN[] rans = getRANs();
+		int i = 0;
+		for (; i < rans.length; i++) {
+			if (rans[i].getThroughput() > 0) {
+				break;
 			}
 		}
-		return 0;
+		return rans[i];
 	}
 
 }

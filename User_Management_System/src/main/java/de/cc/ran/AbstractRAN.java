@@ -27,5 +27,24 @@ public abstract class AbstractRAN implements RAN {
 			return "high";
 		}
 	}
+	
+	public String serialize() {
+		return getClass().getName() + ":" + quality;
+	}
+	
+	public static AbstractRAN deserialize(String data) {
+		String[] parts = data.split(":");
+		if (parts.length != 2) {
+			throw new IllegalArgumentException("Wrong data format");
+		}
+
+		try {
+			AbstractRAN ran = (AbstractRAN) Class.forName(parts[0]).getConstructor().newInstance();
+			ran.quality = Integer.parseInt(parts[1]);
+			return ran;
+		} catch (Exception e) {
+			throw new IllegalArgumentException("Data could not be correctly parsed");
+		}
+	}
 
 }

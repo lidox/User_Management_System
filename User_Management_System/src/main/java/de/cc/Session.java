@@ -1,11 +1,16 @@
 package de.cc;
 
+import de.cc.ran.AbstractRAN;
+import de.cc.ran.GSM;
+import de.cc.ran.RAN;
+
 public class Session {
 	private static final int[] signalQualities = {0, 10, 25, 50};
 	
 	private int time;
 	private int dataVolume;
 	private int signalQuality;
+	private RAN ran;
 	private ServiceType service;
 	
 	private Session() {
@@ -13,13 +18,14 @@ public class Session {
 	}
 	
 	public Session(ServiceType service, int time) {
-		this(service, time, 0);
+		this(service, time, 0, new GSM());
 	}
 	
-	public Session(ServiceType service, int time, int dataVolume) {
+	public Session(ServiceType service, int time, int dataVolume, RAN ran) {
 		this.service = service;
 		this.time = time;
 		this.dataVolume = dataVolume;
+		this.ran = ran;
 		signalQuality = signalQualities[(int) (Math.random()*4)];
 	}
 
@@ -39,11 +45,15 @@ public class Session {
 		return signalQuality/100.;
 	}
 	
+	public RAN getRAN() {
+		return ran;
+	}
+	
 	/**
 	 * @return The session transformed to a semicolon-separated line
 	 */
 	public String serialize() {
-		return time + ";" + dataVolume + ";" + signalQuality + ";" + service;
+		return time + ";" + dataVolume + ";" + signalQuality + ";" + ran.serialize() + ";" + service;
 	}
 	
 	/**
@@ -53,7 +63,7 @@ public class Session {
 	 */
 	public static Session deserialize(String data) {
 		String[] parts = data.split(";");
-		if (parts.length != 4) {
+		if (parts.length != 5) {
 			throw new IllegalArgumentException("Wrong data format");
 		}
 
@@ -62,7 +72,8 @@ public class Session {
 			session.time = Integer.parseInt(parts[0]);
 			session.dataVolume = Integer.parseInt(parts[1]);
 			session.signalQuality = Integer.parseInt(parts[2]);
-			session.service = ServiceType.valueOf(parts[3]);
+			session.ran = AbstractRAN.deserialize(parts[3]);
+			session.service = ServiceType.valueOf(parts[4]);
 			return session;
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Data could not be correctly parsed");
@@ -70,8 +81,8 @@ public class Session {
 	}
 	
 	public String toString() {
-		return String.format("Service: %s, Duration: %d min, Signal-Quality: %d%%, Datavolume: %d MB",
-			service, time, signalQuality, dataVolume
+		return String.format("Service: %s, Duration: %d min, Signal-Quality: %d%% (%s), Datavolume: %d MB",
+			service, time, signalQuality, ran, dataVolume
 		);
 	}
 }
