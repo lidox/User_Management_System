@@ -22,10 +22,9 @@ public class Exporter {
 	}
 
 	public List<Subscriber> importSubscribers() {
-		Scanner scanner;
 		List<Subscriber> list = new ArrayList<Subscriber>();
 		try {
-			scanner = new Scanner(new File("data.csv"));
+			Scanner scanner = new Scanner(new File("data.csv"));
 			while (scanner.hasNextLine()) {
 				String s = scanner.nextLine();
 				Subscriber sub = new Subscriber();
@@ -40,10 +39,6 @@ public class Exporter {
 		} catch (FileNotFoundException e) {
 		}
 		return list;
-	}
-
-	public static void main(String[] args) {
-		
 	}
 
 }

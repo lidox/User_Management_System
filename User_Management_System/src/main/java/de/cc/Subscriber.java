@@ -54,8 +54,8 @@ public class Subscriber {
 	public int getUsedDataVolume() {
 		int sum = 0;
 		for (Session s: sessions) {
-			if (s.getService() == ServiceType.VOICE_CALL) {
-				sum += s.getDauer();
+			if (s.getService() == ServiceType.BROWSING || s.getService() == ServiceType.VIDEO) {
+				sum += s.getDataVolume();
 			}
 		}
 		return sum;
@@ -90,10 +90,10 @@ public class Subscriber {
 			rate = phone.getThroughput();
 			break;
 		}
-		int volume = rate*time;
+		int volume = rate*time*60;
 		int leftVolume = getLeftDataVolume();
 		if (volume > leftVolume) {
-			return (volume-leftVolume)/rate;
+			return (volume-leftVolume)/(rate*60);
 		}
 		sessions.add(new Session(service, time, volume));
 		return 0;
@@ -129,7 +129,7 @@ public class Subscriber {
 	 */
 	public void deserialize(String data) {
 		String[] parts = data.split(",");
-		if (parts.length != 6) {
+		if (parts.length != 7) {
 			throw new IllegalArgumentException("Wrong data format");
 		}
 
