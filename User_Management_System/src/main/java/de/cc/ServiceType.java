@@ -1,5 +1,5 @@
 package de.cc;
 
 public enum ServiceType {
-	VIOCE_CALL, BROWSING, VIDEO
+	VOICE_CALL, BROWSING, VIDEO
 }
