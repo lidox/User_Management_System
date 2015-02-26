@@ -26,14 +26,11 @@ public class Exporter {
 		try {
 			Scanner scanner = new Scanner(new File("data.csv"));
 			while (scanner.hasNextLine()) {
-				String s = scanner.nextLine();
-				Subscriber sub = new Subscriber();
 				try {
-					sub.deserialize(s);
+					list.add(Subscriber.deserialize(scanner.nextLine()));
 				} catch (IllegalArgumentException e) {
 					continue;
 				}
-				list.add(sub);
 			}
 			scanner.close();
 		} catch (FileNotFoundException e) {

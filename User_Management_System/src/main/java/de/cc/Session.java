@@ -8,6 +8,10 @@ public class Session {
 	private int signalQuality;
 	private ServiceType service;
 	
+	private Session() {
+		
+	}
+	
 	public Session(ServiceType service, int time) {
 		this(service, time, 0);
 	}
@@ -47,17 +51,19 @@ public class Session {
 	 * 
 	 * @param data String-representation of the session, as produced by serialize()
 	 */
-	public void deserialize(String data) {
+	public static Session deserialize(String data) {
 		String[] parts = data.split(";");
 		if (parts.length != 4) {
 			throw new IllegalArgumentException("Wrong data format");
 		}
 
 		try {
-			time = Integer.parseInt(parts[0]);
-			dataVolume = Integer.parseInt(parts[1]);
-			signalQuality = Integer.parseInt(parts[2]);
-			service = ServiceType.valueOf(parts[3]);
+			Session session = new Session();
+			session.time = Integer.parseInt(parts[0]);
+			session.dataVolume = Integer.parseInt(parts[1]);
+			session.signalQuality = Integer.parseInt(parts[2]);
+			session.service = ServiceType.valueOf(parts[3]);
+			return session;
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Data could not be correctly parsed");
 		}

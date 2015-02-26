@@ -107,6 +107,15 @@ public class Subscriber {
 		sessions.clear();
 	}
 	
+	/**
+	 * add more data volume to the subscribers contract.
+	 * In this case it's 1000 MB for 10 Euro.
+	 */
+	public void addData(){
+		additionalCosts += 1000;
+		additionalVolume += 1000;
+	}
+	
 	public int getCurrentFee() {
 		int extraMins = Math.max(getUsedMinutes() - contract.getFreeMinutes(), 0);
 		return contract.getBasicFee()
@@ -118,8 +127,13 @@ public class Subscriber {
 	 * @return The subscriber transformed to a comma-separated line
 	 */
 	public String serialize() {
-		return id + "," + name + "," + sessions + "," + additionalCosts + "," + additionalVolume
-				+ "," + contract.getClass().getName() + "," + phone.getClass().getName();
+		String serialSession = "";
+		for (Session session: sessions) {
+			serialSession += "|" + session;
+		}
+		return id + "," + name + "," + additionalCosts + "," + additionalVolume
+			+ "," + contract.getClass().getName() + "," + phone.getClass().getName()
+			+ "," + serialSession.substring(1);
 	}
 	
 	/**
@@ -127,20 +141,27 @@ public class Subscriber {
 	 * 
 	 * @param data String-representation of the subscriber, as produced by serialize()
 	 */
-	public void deserialize(String data) {
+	public static Subscriber deserialize(String data) {
 		String[] parts = data.split(",");
 		if (parts.length != 7) {
 			throw new IllegalArgumentException("Wrong data format");
 		}
 
 		try {
-			setId(parts[0]);
-			setName(parts[1]);
-			//TODO: session parts[2]
-			additionalCosts = Integer.parseInt(parts[3]);
-			additionalVolume = Integer.parseInt(parts[4]);
-			setContract((Contract) Class.forName(parts[5]).getConstructor().newInstance());
-			setPhone((Phone) Class.forName(parts[6]).getConstructor().newInstance());
+			Subscriber sub = new Subscriber();
+			sub.setId(parts[0]);
+			sub.setName(parts[1]);
+			sub.additionalCosts = Integer.parseInt(parts[2]);
+			sub.additionalVolume = Integer.parseInt(parts[3]);
+			sub.setContract((Contract) Class.forName(parts[4]).getConstructor().newInstance());
+			sub.setPhone((Phone) Class.forName(parts[5]).getConstructor().newInstance());
+			for(String session: parts[6].split("\\|")) {
+				if (session.isEmpty()) {
+					continue;
+				}
+				sub.sessions.add(Session.deserialize(session));
+			}
+			return sub;
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Data could not be correctly parsed");
 		}
@@ -157,14 +178,5 @@ public class Subscriber {
 			phone.substring(phone.lastIndexOf(".")+1),
 			contract.substring(contract.lastIndexOf(".")+1)
 		);
-	}
-	
-	/**
-	 * add more data volume to the subscribers contract.
-	 * In this case it's 1000 MB for 10 Euro.
-	 */
-	public void addData(){
-		additionalCosts += 1000;
-		additionalVolume += 1000;
 	}
 }
