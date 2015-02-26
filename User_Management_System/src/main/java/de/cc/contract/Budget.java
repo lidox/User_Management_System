@@ -1,12 +1,9 @@
 package de.cc.contract;
 
 public class Budget implements Contract {
-	
-	int dataVolume = 500;
-	int basicFee = 100;
 
 	public int getFreeData() {
-		return dataVolume;
+		return 500;
 	}
 
 	public int getFreeMinutes() {
@@ -18,17 +15,7 @@ public class Budget implements Contract {
 	}
 
 	public int getBasicFee() {
-		return basicFee;
-	}
-
-	public void addData(int data, int price) {
-		dataVolume += data;
-		basicFee += price;
-	}
-
-	public void resetContract() {
-		dataVolume = 500;
-		basicFee = 100;
+		return 1000;
 	}
 
 	
