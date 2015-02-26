@@ -1,5 +1,5 @@
 package de.cc;
-//TODO: im controller beim einlesen ein trim() durchführen
+
 /**
  * this class handles all about Session Management 
  */
@@ -62,7 +62,7 @@ public class SessionController {
 	 * @return
 	 *    String the service type
 	 */
-	private ServiceType getServiceType(String userInput) {
+	public ServiceType getServiceType(String userInput) {
 		String type = userInput.toLowerCase();
 		
 		boolean isBrowser = type.equals("browser");
@@ -74,7 +74,7 @@ public class SessionController {
 			return ServiceType.VIDEO;
 		
 		boolean isVoice = type.equals("voice");
-		if(isVoice)
+		if(isVoice || type.equals("voicecall") || type.equals("voice call"))
 			return ServiceType.VOICE_CALL; 
 		
 		
@@ -88,7 +88,7 @@ public class SessionController {
 	 * @return 
 	 *    int the time in minutes 
 	 */
-	private int getTime(String readString) {
+	public int getTime(String readString) {
 		int result=0;
 		try {
 			result = Integer.parseInt(readString);
@@ -102,43 +102,5 @@ public class SessionController {
 
 		return result;
 	}
-
-
-
-	public String getFreeMinutesAndData(Subscriber sub){
-		StringBuilder ret = new StringBuilder();
-		ret.append("Der User '"+ sub.getName() +"' hat noch ");
-		ret.append("X" + " Freiminuten und " + "Y" + " Datenvolumen.");
-		return ret.toString();
-	}
-	
-	/**
-	 * Get a subscriber by IMSI
-	 * @param IMSI
-	 *    the IMSI of the subscriber 
-	 * @return
-	 * 	  if subscriber not exists return null otherwise return subscriber 
-	 */
-	public Subscriber getSubscribor(String IMSI){
-		for(Subscriber item:controller.getSubscribers()){
-			if(item.getId().equals(IMSI.substring(5))){
-				return item;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Simulates a subscribers session
-	 * @param sessionType
-	 * @param subscriberId
-	 * @param time
-	 * @param service
-	 */
-	public void simulate(String sessionType,String subscriberId,String time, String service){
-
-	}
-	
-	
 	
 }
