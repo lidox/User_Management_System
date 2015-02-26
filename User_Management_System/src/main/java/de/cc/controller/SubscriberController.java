@@ -56,7 +56,7 @@ public class SubscriberController {
 			sub.setName(controller.readString(".+"));
 
 			System.out.print("Subscriber MSIN: ");
-			sub.setId(controller.readString("\\d{10}"));
+			sub.setId(inputMSIN());
 
 			System.out.println("Subscriber Terminal Type: ");
 			sub.setPhone(inputTerminalType());
@@ -71,6 +71,17 @@ public class SubscriberController {
 
 		controller.printStartMenu();
 
+	}
+	
+	public String inputMSIN() {
+		String msin = controller.readString("\\d{10}");
+		for (Subscriber sub: controller.getSubscribers()) {
+			if (sub.getId().equals(msin)) {
+				System.out.println("MSIN is already in use. Enter another one.");
+				return inputMSIN();
+			}
+		}
+		return msin;
 	}
 
 	public Phone inputTerminalType() {
