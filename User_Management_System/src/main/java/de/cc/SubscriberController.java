@@ -35,7 +35,8 @@ public class SubscriberController {
 			removeSubscriber();
 			break;
 		case 4:
-			listSubscribers(true);
+			controller.listSubscribers();
+			controller.printStartMenu();
 			break;
 		case 5:
 			controller.printStartMenu();
@@ -108,22 +109,12 @@ public class SubscriberController {
 	}
 
 	public void removeSubscriber() {
-		listSubscribers(false);
 		try {
 			controller.getSubscribers().remove(controller.searchSubscriber());
 		} catch (IllegalStateException e) {
 			System.out.println(e.getMessage());
 		}
 		controller.printStartMenu();
-	}
-
-	public void listSubscribers(boolean returnToStartMenu) {
-		for (Subscriber sub: controller.getSubscribers()) {
-			System.out.println(sub);
-		}
-		if (returnToStartMenu) {
-			controller.printStartMenu();
-		}
 	}
 
 }

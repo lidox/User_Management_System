@@ -19,6 +19,15 @@ public class Controller {
 	public List<Subscriber> getSubscribers() {
 		return subs;
 	}
+
+	/**
+	 * Outputs a list of all subscribers
+	 */
+	public void listSubscribers() {
+		for (Subscriber sub: getSubscribers()) {
+			System.out.println(sub);
+		}
+	}
 	
 	/**
 	 * Waits for input of name or MSIN, loops until match is found or search is quitted
@@ -27,6 +36,7 @@ public class Controller {
 	 * @throws IllegalStateException if search is quitted
 	 */
 	public int searchSubscriber() {
+		listSubscribers();
 		System.out.println("Insert MSIN or name to search for (insert 'q' to quit search)");
 		String search = readString(".+");
 		if ("q".equals(search)) {
