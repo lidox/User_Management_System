@@ -38,10 +38,10 @@ public class InvoiceController {
 	 */
 	private void doInvoice() {
 		for (Subscriber sub: controller.getSubscribers()) {
-			System.out.printf("%s, Cost: %.2f €", sub.toString(), sub.getCurrentFee()/100.);
+			System.out.printf("%s, Cost: %.2f €\n", sub.toString(), sub.getCurrentFee()/100.);
 			List<Session> listSess = sub.getSessions();
 			for (Session session : listSess) {
-				System.out.println("    " + session + "\n");
+				System.out.println("    " + session);
 			}
 			sub.resetSessions();
 		}
