@@ -44,10 +44,10 @@ public class SessionController {
 			);
 			
 			System.out.print("Select service type: ");
-			ServiceType serviceType = getServiceType(controller.readString(".+")); 
+			ServiceType serviceType = getServiceType(controller.readString()); 
 			
 			System.out.print("Select time (in minutes): ");
-			int time = 60*getTime(controller.readString(".+"));
+			int time = 60*getTime(controller.readString());
 			
 			//hat er genug datenvolumen?
 			RAN ran = sub.getPhone().getRAN();
@@ -85,7 +85,7 @@ public class SessionController {
 	}
 	
 	private boolean wantMore() {
-		String readString = controller.readString(".+");
+		String readString = controller.readString();
 		String type = readString.toLowerCase();
 		
 		if(type.equals("no") || type.equals("n"))

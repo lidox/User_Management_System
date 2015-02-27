@@ -41,7 +41,7 @@ public class Controller {
 	public int searchSubscriber() {
 		listSubscribers();
 		System.out.println("Insert MSIN or name to search for (insert 'q' to quit search)");
-		String search = readString(".+");
+		String search = readString();
 		if ("q".equals(search)) {
 			throw new IllegalStateException("Search for subscriber was quitted by user");
 		}
@@ -57,11 +57,7 @@ public class Controller {
 	}
 	
 	public String readString(){
-		return sc.nextLine().trim();
-	}
-	
-	public String readString(String pattern){
-		String in = sc.next(pattern);
+		String in = sc.nextLine().trim();
 		sc.reset();
 		return in;
 	}
