@@ -40,7 +40,7 @@ public class Subscriber {
 		}
 		this.id = id;
 	}
-	public int getUsedMinutes() {
+	public int getUsedSeconds() {
 		int sum = 0;
 		for (Session s: sessions) {
 			if (s.getService() == ServiceType.VOICE_CALL) {
@@ -49,8 +49,8 @@ public class Subscriber {
 		}
 		return sum;
 	}
-	public int getLeftMinutes() {
-		return Math.max(contract.getFreeMinutes()-getUsedMinutes(), 0);
+	public int getLeftSeconds() {
+		return Math.max(contract.getFreeMinutes()*60-getUsedSeconds(), 0);
 	}
 	public int getUsedDataVolume() {
 		int sum = 0;
@@ -78,8 +78,7 @@ public class Subscriber {
 		this.phone = phone;
 	}
 	
-	public int useService(ServiceType service, int time) {
-		RAN ran = phone.getRAN();
+	public int useService(ServiceType service, int time, RAN ran) {
 		int rate = 0;
 		switch (service) {
 		case VOICE_CALL:
@@ -92,10 +91,10 @@ public class Subscriber {
 			rate = ran.getThroughput();
 			break;
 		}
-		int volume = rate*time*60;
+		int volume = rate*time;
 		int leftVolume = getLeftDataVolume();
 		if (volume > leftVolume) {
-			return (volume-leftVolume)/(rate*60);
+			return (volume-leftVolume)/(rate);
 		}
 		sessions.add(new Session(service, time, volume, ran));
 		return 0;
@@ -119,7 +118,7 @@ public class Subscriber {
 	}
 	
 	public int getCurrentFee() {
-		int extraMins = Math.max(getUsedMinutes() - contract.getFreeMinutes(), 0);
+		int extraMins = (int) Math.ceil(Math.max(getUsedSeconds() - contract.getFreeMinutes()*60, 0)/60.);
 		return contract.getBasicFee()
 			+ contract.getPricePerExtraMinute()*extraMins
 			+ additionalCosts;
@@ -173,7 +172,7 @@ public class Subscriber {
 		return String.format("262-42-%s - %-25s Voice: %4d min, Data: %4d MB, %s, %s",
 			getId(),
 			getName(),
-			getUsedMinutes(),
+			getUsedSeconds(),
 			getUsedDataVolume(),
 			phone,
 			contract

@@ -13,7 +13,7 @@ public abstract class AbstractPhone implements Phone {
 				break;
 			}
 		}
-		return rans[i];
+		return rans[Math.min(i, rans.length-1)];
 	}
 
 }

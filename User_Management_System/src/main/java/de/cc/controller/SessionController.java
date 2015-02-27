@@ -2,6 +2,7 @@ package de.cc.controller;
 
 import de.cc.ServiceType;
 import de.cc.Subscriber;
+import de.cc.ran.RAN;
 
 /**
  * this class handles all about Session Management 
@@ -38,26 +39,27 @@ public class SessionController {
 			Subscriber sub = controller.getSubscribers().get(indexOfSubscriber);
 			
 			System.out.print("The user '" +sub.getName()+ "' ");
-			System.out.println(" has "+sub.getLeftDataVolume() +" MB left data and "+ sub.getLeftMinutes()+ " left minutes");
+			System.out.println(" has "+sub.getLeftDataVolume() +" MB left data and "+ sub.getLeftSeconds()+ " left minutes");
 			
 			System.out.print("Select service type: ");
 			ServiceType serviceType = getServiceType(controller.readString(".+")); 
 			
 			System.out.print("Select time (in minutes): ");
-			int time = getTime(controller.readString(".+"));
+			int time = 60*getTime(controller.readString(".+"));
 			
 			//hat er genug datenvolumen?
-			int left = sub.useService(serviceType, time);
+			RAN ran = sub.getPhone().getRAN();
+			int left = sub.useService(serviceType, time, ran);
 			while(left>0){
 				System.out.println("Do you want extra 1 GB for 10 Euro?");
 				if(wantMore()){
 					sub.addData();
 				}
 				else{
-					sub.useService(serviceType, (time-left));
+					sub.useService(serviceType, (time-left), ran);
 					break;
 				}
-				left = sub.useService(serviceType, time);
+				left = sub.useService(serviceType, time, ran);
 			}
 			
 
@@ -65,14 +67,12 @@ public class SessionController {
 			//System.out.println(sub.getName()+ serviceType + time);
 			//sub.useService(serviceType, time);
 		
-			System.out.println(String.format("262-42-%s - %-8s Minutes: %4s, ServiceType: %4s, Used MB: %4s, Left MB: %4s MB, signal quality: %2.0f%%",
-                    sub.getId(),
-                    sub.getName(),
-                    time,
-                    serviceType.toString(),
-                    sub.getSessions().get(sub.getSessions().size()-1).getDataVolume(),
-                    sub.getLeftDataVolume(),
-                    sub.getSessions().get(sub.getSessions().size()-1).getSignalQuality()*100));
+			System.out.println(String.format("262-42-%s - %-8s %s, Left MB: %d MB",
+                sub.getId(),
+                sub.getName(),
+                sub.getSessions().get(sub.getSessions().size()-1).toString(),
+                sub.getLeftDataVolume()
+            ));
 			
 		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
