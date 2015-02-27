@@ -96,8 +96,15 @@ public class Subscriber {
 		int leftVolume = getLeftDataVolume();
 		if (volume > leftVolume) {
 			return (volume-leftVolume)/(rate*60);
+			//TODO: klappt nicht
+			/**
+			 * z.B. LTE mit 50% signal und einer angabe von 10 minuten video gucken:
+			 * => 50*60*10 = 30000 (dann hat der user budget, also 500 mb)
+			 * => t = (30000-500)/(60*50)= 9,83333 ABER zurueckgegen wird 9!
+			 */
 		}
 		sessions.add(new Session(service, time, volume, ran));
+		//TODO: hier sollte eine session mit der wirklichen zweit rein, kann ja sein dass der user 'nein' drückt
 		return 0;
 	}
 	
