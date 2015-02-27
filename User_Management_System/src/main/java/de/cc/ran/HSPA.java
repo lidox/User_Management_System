@@ -18,7 +18,7 @@ public class HSPA extends AbstractRAN {
 	}
 	
 	@Override
-	public String toString() {
+	public String getName() {
 		return "HSPA";
 	}
 

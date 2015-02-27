@@ -3,7 +3,7 @@ package de.cc.contract;
 public class Business implements Contract {
 	
 	public int getFreeData() {
-		return 2000;
+		return 16000;
 	}
 
 	public int getFreeMinutes() {

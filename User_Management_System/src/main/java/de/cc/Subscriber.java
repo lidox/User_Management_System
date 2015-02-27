@@ -79,7 +79,7 @@ public class Subscriber {
 	}
 	
 	public int useService(ServiceType service, int time, RAN ran) {
-		int rate = 0;
+		int rate = 0;// MBit/s, time: sec
 		switch (service) {
 		case VOICE_CALL:
 			sessions.add(new Session(service, time));
@@ -106,6 +106,8 @@ public class Subscriber {
 	
 	public void resetSessions() {
 		sessions.clear();
+		additionalCosts = 0;
+		additionalVolume = 0;
 	}
 	
 	/**
@@ -114,7 +116,7 @@ public class Subscriber {
 	 */
 	public void addData(){
 		additionalCosts += 1000;
-		additionalVolume += 1000;
+		additionalVolume += 8000;
 	}
 	
 	public int getCurrentFee() {
@@ -169,11 +171,11 @@ public class Subscriber {
 	}
 	
 	public String toString() {
-		return String.format("262-42-%s - %-25s Voice: %4d min, Data: %4d MB, %s, %s",
+		return String.format("262-42-%s - %-25s Voice: %4d min, Data: %.2f MB, %s, %s",
 			getId(),
 			getName(),
 			getUsedSeconds(),
-			getUsedDataVolume(),
+			getUsedDataVolume()/8.,
 			phone,
 			contract
 		);

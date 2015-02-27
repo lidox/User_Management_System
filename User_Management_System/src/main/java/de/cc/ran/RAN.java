@@ -6,6 +6,8 @@ public interface RAN {
 	
 	public String getQuality();
 	
+	public int getQualityValue();
+	
 	public String serialize();
 	
 }

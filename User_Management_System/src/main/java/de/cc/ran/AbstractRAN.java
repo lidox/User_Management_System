@@ -28,6 +28,10 @@ public abstract class AbstractRAN implements RAN {
 		}
 	}
 	
+	public int getQualityValue() {
+		return quality;
+	}
+	
 	public String serialize() {
 		return getClass().getName() + ":" + quality;
 	}
@@ -45,6 +49,13 @@ public abstract class AbstractRAN implements RAN {
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Data could not be correctly parsed");
 		}
+	}
+	
+	public abstract String getName();
+	
+	@Override
+	public String toString() {
+		return getName() + " (" + quality + "%)";
 	}
 
 }

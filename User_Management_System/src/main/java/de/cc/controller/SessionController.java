@@ -38,8 +38,10 @@ public class SessionController {
 			int indexOfSubscriber = controller.searchSubscriber();
 			Subscriber sub = controller.getSubscribers().get(indexOfSubscriber);
 			
-			System.out.print("The user '" +sub.getName()+ "' ");
-			System.out.println(" has "+sub.getLeftDataVolume() +" MB left data and "+ sub.getLeftSeconds()+ " left minutes");
+			System.out.print("");
+			System.out.printf("The user '%s' has %.2f MB left data and %.2f left minutes\n",
+				sub.getName(), sub.getLeftDataVolume()/8., sub.getLeftSeconds()/60.
+			);
 			
 			System.out.print("Select service type: ");
 			ServiceType serviceType = getServiceType(controller.readString(".+")); 
@@ -67,11 +69,11 @@ public class SessionController {
 			//System.out.println(sub.getName()+ serviceType + time);
 			//sub.useService(serviceType, time);
 		
-			System.out.println(String.format("262-42-%s - %-8s %s, Left MB: %d MB",
+			System.out.println(String.format("262-42-%s - %-8s %s, Left MB: %.2f MB",
                 sub.getId(),
                 sub.getName(),
                 sub.getSessions().get(sub.getSessions().size()-1).toString(),
-                sub.getLeftDataVolume()
+                sub.getLeftDataVolume()/8.
             ));
 			
 		} catch(Exception e) {

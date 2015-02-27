@@ -3,7 +3,7 @@ package de.cc.contract;
 public class Premium implements Contract {
 
 	public int getFreeData() {
-		return 5000;
+		return 40000;
 	}
 
 	public int getFreeMinutes() {

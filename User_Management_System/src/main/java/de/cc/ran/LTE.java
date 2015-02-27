@@ -18,7 +18,7 @@ public class LTE extends AbstractRAN {
 	}
 	
 	@Override
-	public String toString() {
+	public String getName() {
 		return "LTE";
 	}
 

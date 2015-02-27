@@ -5,11 +5,9 @@ import de.cc.ran.GSM;
 import de.cc.ran.RAN;
 
 public class Session {
-	private static final int[] signalQualities = {0, 10, 25, 50};
 	
 	private int time;
 	private int dataVolume;
-	private int signalQuality;
 	private RAN ran;
 	private ServiceType service;
 	
@@ -26,7 +24,6 @@ public class Session {
 		this.time = time;
 		this.dataVolume = dataVolume;
 		this.ran = ran;
-		signalQuality = signalQualities[(int) (Math.random()*4)];
 	}
 
 	public int getDauer() {
@@ -41,8 +38,12 @@ public class Session {
 		return dataVolume;
 	}
 	
+	public int getSignalQualityInt() {
+		return ran.getQualityValue();
+	}
+	
 	public double getSignalQuality() {
-		return signalQuality/100.;
+		return getSignalQualityInt()/100.;
 	}
 	
 	public RAN getRAN() {
@@ -53,7 +54,7 @@ public class Session {
 	 * @return The session transformed to a semicolon-separated line
 	 */
 	public String serialize() {
-		return time + ";" + dataVolume + ";" + signalQuality + ";" + ran.serialize() + ";" + service;
+		return time + ";" + dataVolume + ";" + ran.serialize() + ";" + service;
 	}
 	
 	/**
@@ -71,9 +72,8 @@ public class Session {
 			Session session = new Session();
 			session.time = Integer.parseInt(parts[0]);
 			session.dataVolume = Integer.parseInt(parts[1]);
-			session.signalQuality = Integer.parseInt(parts[2]);
-			session.ran = AbstractRAN.deserialize(parts[3]);
-			session.service = ServiceType.valueOf(parts[4]);
+			session.ran = AbstractRAN.deserialize(parts[2]);
+			session.service = ServiceType.valueOf(parts[3]);
 			return session;
 		} catch (Exception e) {
 			throw new IllegalArgumentException("Data could not be correctly parsed");
@@ -81,8 +81,8 @@ public class Session {
 	}
 	
 	public String toString() {
-		return String.format("Service: %s, Duration: %.2f min, Signal-Quality: %d%% (%s), Datavolume: %d MB",
-			service, time/60., signalQuality, ran, dataVolume
+		return String.format("Service: %s, Duration: %.2f min, Signal: %s, Datavolume: %.2f MB",
+			service, time/60., ran, dataVolume/8.
 		);
 	}
 }

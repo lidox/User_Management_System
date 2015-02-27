@@ -15,7 +15,7 @@ public class GSM extends AbstractRAN {
 	}
 	
 	@Override
-	public String toString() {
+	public String getName() {
 		return "GSM";
 	}
 
