@@ -67,7 +67,12 @@ public class Controller {
 	}
 	
 	public int readInt(){
-		int in = sc.nextInt();
+		int in=-1;
+		try {
+			in = Integer.parseInt(sc.nextLine());
+		} catch (Throwable e) {
+			return in;
+		}
 		sc.reset();
 		return in;
 	}
