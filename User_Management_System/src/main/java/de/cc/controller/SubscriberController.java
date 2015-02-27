@@ -52,16 +52,16 @@ public class SubscriberController {
 		try {
 			Subscriber sub = new Subscriber();
 
-			System.out.print("Subscriber Name: ");
-			sub.setName(controller.readString(".+"));
+			System.out.println("Subscriber Name:");
+			sub.setName(inputName());
 
-			System.out.println("Subscriber MSIN: ");
+			System.out.println("Subscriber MSIN:");
 			sub.setId(inputMSIN());
 
-			System.out.println("Subscriber Terminal Type: ");
+			System.out.println("Subscriber Terminal Type:");
 			sub.setPhone(inputTerminalType());
 
-			System.out.println("Subscriber Subscription Type: ");
+			System.out.println("Subscriber Subscription Type:");
 			sub.setContract(inputSubscriptionType());
 
 			controller.getSubscribers().add(sub);
@@ -75,8 +75,8 @@ public class SubscriberController {
 	
 	public String inputMSIN() {
 		System.out.print("Enter MSIN: ");
-		String msin = controller.readString("\\d{10}");
-		if (msin == null) {
+		String msin = controller.readString();
+		if (msin == null || !msin.matches("\\d{10}")) {
 			System.out.println("Illegal Input. Only a single ten-digit-number is allowed. Try again.");
 			return inputMSIN();
 		}
@@ -87,6 +87,16 @@ public class SubscriberController {
 			}
 		}
 		return msin;
+	}
+	
+	public String inputName() {
+		System.out.print("Enter Name: ");
+		String name = controller.readString();
+		if (name == null || name.isEmpty()) {
+			System.out.println("Illegal Input. Name cannot be empty. Try again.");
+			return inputName();
+		}
+		return name;
 	}
 
 	public Phone inputTerminalType() {
@@ -151,7 +161,7 @@ public class SubscriberController {
 			switch (controller.readInt()) {
 			case 1:
 				System.out.print("Subscriber Name (" + sub.getName() + "): ");
-				sub.setName(controller.readString(".+"));
+				sub.setName(inputName());
 				editSubscriber();
 			case 2:
 				System.out.println("(" + sub.getPhone() + ")");
