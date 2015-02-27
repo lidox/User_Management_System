@@ -69,8 +69,9 @@ public class Controller {
 	public int readInt(){
 		int in=-1;
 		try {
-			in = Integer.parseInt(sc.nextLine());
+			in = Integer.parseInt(sc.nextLine().trim());
 		} catch (Throwable e) {
+			sc.reset();
 			return in;
 		}
 		sc.reset();
